@@ -24,18 +24,20 @@ public class Mesa {
 	@SequenceGenerator(name = "MESA_ID_GENERATOR", sequenceName = "mesa_id_mesa_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MESA_ID_GENERATOR")
 	@ApiModelProperty(value = "id principal de la mesa", required = false)
+	
+	@Column(name = "id_mesa")
 	private Integer idMesa;
 	
-	@Column(name = "num_mesa")
+	
 	private Integer num_mesa;
 	
 	private String descripcion_mesa;
 	
-	private Integer digitos;
 	
 	private Integer id_Salon;
 	
 	private boolean estado;
+	
 	
 	
 

@@ -15,7 +15,7 @@ public class MesaService {
 	private MesaRepository mesaRepository;
 	
 	public List<Mesa> findAll() {
-		   return mesaRepository.findAll();
+		   return (List<Mesa>)mesaRepository.findAll();
 		}
 
 }
