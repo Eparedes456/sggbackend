@@ -17,5 +17,25 @@ public class MesaService {
 	public List<Mesa> findAll() {
 		   return (List<Mesa>)mesaRepository.findAll();
 		}
-
+	
+	public Mesa findById(Integer idMesa) {
+		return mesaRepository.findById(idMesa).orElse(null);
+	}
+	
+	public void insert(Mesa mesa) {
+		
+		mesaRepository.save(mesa);
+	}
+	
+	public void update(Mesa mesa) {
+		mesaRepository.save(mesa);
+	}
+	
+	public void delete(Mesa mesa) {
+		mesaRepository.save(mesa);
+	}
+	
+	public void deleteFisico(Mesa mesa) {
+		mesaRepository.delete(mesa);
+	}
 }
