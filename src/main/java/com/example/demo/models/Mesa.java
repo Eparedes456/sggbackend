@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -33,8 +35,11 @@ public class Mesa {
 	
 	private String descripcion_mesa;
 	
-	
-	private Integer id_Salon;
+	@ApiModelProperty(value="Modelo salon", required = true)
+	@ManyToOne
+	@JoinColumn(name="id_salon")
+	//private Integer id_Salon;
+	private Salon salon;
 	
 	private boolean estado;
 	

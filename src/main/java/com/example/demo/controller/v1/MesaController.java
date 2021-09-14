@@ -1,9 +1,7 @@
 package com.example.demo.controller.v1;
 
 import java.util.HashMap;
-import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,16 +30,7 @@ public class MesaController {
 	@Autowired
 	private MesaService mesasService;
 	
-	/*@GetMapping
-	public ResponseEntity<?> findAllPrueba(){
-		
-		HashMap<String, Object> result = new HashMap<>();
-		
-		result.put("mensaje","hola");
-		
-		return new ResponseEntity<>(result, HttpStatus.OK);
-		
-	}*/
+	
 	
 	@ApiOperation(value = "LISTA TODAS LAS MESAS")
 	@GetMapping
@@ -74,7 +63,9 @@ public class MesaController {
 			){
 				HashMap<String, Object> result = new HashMap<>();
 				
-				Mesa table = mesasService.findById(mesa.getIdMesa());
+				Mesa table = mesasService.findById(
+						mesa.getIdMesa() 
+						);
 				
 				if(table != null) {
 				  result.put("success", false);
@@ -87,7 +78,7 @@ public class MesaController {
 				result.put("message", "El resgistro se inserto correctamente");
 				result.put("data", table);
 				return new ResponseEntity<>(result,HttpStatus.OK);
-				// result.put("data", tmp)	
+					
 			}
 	
 	@ApiOperation(value="ACTUALIZAR LOS DATOS DE UNA MESA")
