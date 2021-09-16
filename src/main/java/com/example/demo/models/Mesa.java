@@ -35,11 +35,12 @@ public class Mesa {
 	
 	private String descripcion_mesa;
 	
-	@ApiModelProperty(value="Modelo salon", required = true)
-	@ManyToOne
-	@JoinColumn(name="id_salon")
+	private Integer idSalon;
+	//@ApiModelProperty(value="Modelo salon", required = true)
+	//@ManyToOne
+	//@JoinColumn(name="id_salon")
 	//private Integer id_Salon;
-	private Salon salon;
+	//private Salon salon;
 	
 	private boolean estado;
 	

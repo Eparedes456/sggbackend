@@ -3,6 +3,7 @@ package com.example.demo.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.repository.MesaRepository;
@@ -17,6 +18,11 @@ public class MesaService {
 	public List<Mesa> findAll() {
 		   return (List<Mesa>)mesaRepository.findAll();
 		}
+	
+	
+	public List<Mesa> findMesaBySalon(Integer idSalon){
+		return mesaRepository.findMesaBySalon(idSalon);
+	}
 	
 	public Mesa findById(Integer idMesa) {
 		return mesaRepository.findById(idMesa).orElse(null);

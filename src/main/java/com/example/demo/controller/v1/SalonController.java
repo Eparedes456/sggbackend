@@ -1,6 +1,7 @@
 package com.example.demo.controller.v1;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.models.Mesa;
 import com.example.demo.models.Salon;
+import com.example.demo.service.MesaService;
 import com.example.demo.service.SalonService;
 
 import io.swagger.annotations.ApiOperation;
@@ -28,12 +30,33 @@ public class SalonController {
 
 	@Autowired
 	private SalonService salonService;
+	@Autowired
+	private MesaService mesaService;
 	
 	@ApiOperation(value = "LISTA TODOS LOS SALONES")
 	@GetMapping
 	public ResponseEntity<?> findAllSalones() {
 		return new ResponseEntity<>(salonService.findAll(),HttpStatus.OK);
 	}
+	
+	
+	@ApiOperation(value = "BUSCA mesas QUE CORRSPONDEN A UN SALON BUSCANDO POR IDSALON")
+	@GetMapping("/mesas/{idSalon}")
+	public ResponseEntity<?>findBySalon(
+		     @PathVariable(value = "idSalon") Integer idSalon
+			){
+				HashMap<String, Object> result = new HashMap<>();
+				List<Mesa> mesas = mesaService.findMesaBySalon(idSalon);
+				if(mesas==null) {
+					result.put("success", false);
+					result.put("message", "No existe el id "+idSalon+" del tipo de documento");
+					return new ResponseEntity<>(result,HttpStatus.NOT_FOUND);
+				}
+				
+				result.put("success", true);
+				result.put("data", mesas);
+				return new ResponseEntity<>(result,HttpStatus.OK);
+			}
 	
 	@ApiOperation(value = "BUSCA UN SALON POR SU ID")
 	@GetMapping("/{idSalon}")
