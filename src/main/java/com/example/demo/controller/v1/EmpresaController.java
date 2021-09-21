@@ -15,138 +15,138 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.models.Mesa;
-import com.example.demo.models.Perfil;
-import com.example.demo.service.PerfilService;
+import com.example.demo.models.Empresa;
+import com.example.demo.service.EmpresaService;
 
 import io.swagger.annotations.ApiOperation;
 
+
 @RestController
-@RequestMapping(value = "/api/v1/perfil", produces = "Application/json")
+@RequestMapping(value = "/api/v1/salon", produces = "Application/json")
 @CrossOrigin(origins = "*")
-
-public class PerfilController {
-
-	@Autowired
-	private PerfilService perfilService;
+public class EmpresaController {
 	
-	@ApiOperation(value = "LISTAR TODOS LOS PERFILES")
+	@Autowired
+	private EmpresaService empresaService;
+	
+	@ApiOperation(value = "LISTA TODAS LAS EMPRESAS")
 	@GetMapping
-	public ResponseEntity<?> findAllPerfiles() {
-		return new ResponseEntity<>(perfilService.findAll(),HttpStatus.OK);
+	public ResponseEntity<?> findAll() {
+		return new ResponseEntity<>(empresaService.findAll(),HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "BUSCA UN PERFIL POR SU ID")
-	@GetMapping("/{idPerfil}")
+	
+	@ApiOperation(value = "BUSCA UNA EMPRESA POR SU ID")
+	@GetMapping("/{idEmpresa}")
 	public ResponseEntity<?>findById(
-		     @PathVariable(value = "idPerfil") Integer idPerfil
+		     @PathVariable(value = "idEmpresa") Integer idEmpresa
 			){
 				HashMap<String, Object> result = new HashMap<>();
-				Perfil perfil = perfilService.findById(idPerfil);
-				if(perfil==null) {
+				Empresa empresa = empresaService.findById(idEmpresa);
+				if(empresa == null) {
 					result.put("success", false);
-					result.put("message", "No existe el id "+idPerfil+" del tipo de documento");
+					result.put("message", "No existe el id "+idEmpresa+" del tipo de documento");
 					return new ResponseEntity<>(result,HttpStatus.NOT_FOUND);
 				}
 				
 				result.put("success", true);
-				result.put("data", perfil);
+				result.put("data", empresa);
 				return new ResponseEntity<>(result,HttpStatus.OK);
 			}
 	
-	@ApiOperation(value="CREAR Y GUARDAR UN PERFIL")
+	
+	/*@ApiOperation(value="CREAR Y GUARDAR UN SALON")
 	@PostMapping
-	public ResponseEntity<?>insertPerfil(
-			 @RequestBody Perfil perfil
+	public ResponseEntity<?>insertEmpresa(
+			 @RequestBody Empresa empresa
 			){
 				HashMap<String, Object> result = new HashMap<>();
 				
-				Perfil profile = perfilService.findById(
-						perfil.getIdPerfil() 
-						);
+				Empresa empresas =	empresaService.findById(empresa.getIdEmpresa());
 				
-				if(profile != null) {
+				if(empresas != null) {
 				  result.put("success", false);
-				  result.put("message", "Ya existe el id "+perfil.getIdPerfil()+" del tipo de documento");
+				  result.put("message", "Ya existe el id "+empresa.getIdEmpresa()+" del tipo de documento");
 				  return new ResponseEntity<>(result,HttpStatus.CONFLICT);
 				}
-				perfil.setEstado(true);
-				perfilService.insert(perfil);
+				empresa.setEstado(true);
+				empresaService.insert(empresa);
 				result.put("success", true);
 				result.put("message", "El resgistro se inserto correctamente");
-				result.put("data", profile);
+				result.put("data", empresa);
 				return new ResponseEntity<>(result,HttpStatus.OK);
 					
-			}
+			}*/
 	
-	
-	@ApiOperation(value="ACTUALIZAR LOS DATOS DE UN PERFIL")
+	/*@ApiOperation(value="ACTUALIZAR LOS DATOS DE LA EMPRESA")
 	@PutMapping
-	public ResponseEntity<?> updatePerfil(
-			  @RequestBody Perfil perfil
+	public ResponseEntity<?> updateEmpresa(
+			  @RequestBody Empresa empresa
 			){
 				HashMap<String, Object> result = new HashMap<>();
-				Perfil profile = perfilService.findById(perfil.getIdPerfil());
+				Empresa empresas = empresaService.findById(empresa.getIdEmpresa());
 				
-				if(profile == null) {
+				if(empresas == null) {
 					result.put("success", false);
-					result.put("message", "No existe el "+perfil.getIdPerfil()+" del tipo Documento");
+					result.put("message", "No existe el "+empresa.getIdEmpresa()+" del tipo Documento");
 				  return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
 				}
 				
-				perfilService.update(perfil);
+				empresaService.update(empresa);
 				
 				result.put("success", true);
 				result.put("message", "Se ha actualizado correctamente");
-				result.put("data", profile);
+				result.put("data", empresas);
 				
 				return new ResponseEntity<>(result, HttpStatus.OK);
-			}
+			}*/
 	
-	@ApiOperation(value="ELIMINAR UN REGISTRO")
+	/*@ApiOperation(value="ELIMINAR UN REGISTRO")
 	@PutMapping("/delete")
-	public ResponseEntity<?> deletePerfil(
-	 @RequestBody Perfil perfil
+	public ResponseEntity<?> deletEmpresa(
+	 @RequestBody Empresa empresa
 	){
 		HashMap<String, Object> result = new HashMap<>();
-		Perfil profile = perfilService.findById(perfil.getIdPerfil());
+		Empresa empresas = empresaService.findById(empresa.getIdEmpresa());
 		
-		if(profile == null) {
+		if(empresas == null) {
 			result.put("success", false);
-			result.put("message", "No existe el "+perfil.getIdPerfil()+" de mesa");
+			result.put("message", "No existe el "+empresa.getIdEmpresa()+" de mesa");
 		  return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
 		}
 		
-		perfil.setEstado(false);
-		perfilService.delete(perfil);
+		empresa.setEstado(false);
+		empresaService.delete(empresa);
 		
 		result.put("success", true);
 		result.put("message", "Se ha eliminado correctamente");
-		result.put("data", profile);
+		result.put("data", empresas);
 		
 		return new ResponseEntity<>(result, HttpStatus.OK);
-	}
+	}*/
 	
-	@DeleteMapping("/{idPerfil}")
-	public ResponseEntity<?>deleteFisicoPerfil(
-	 @PathVariable(value = "idPerfil") Integer idPerfil
+	/*@DeleteMapping("/{idEmpresa}")
+	public ResponseEntity<?>deleteFisicoEmpresa(
+	 @PathVariable(value = "idEmpresa") Integer idEmpresa
 	){
 		
 		HashMap<String, Object> result = new HashMap<>();
-		Perfil profile = perfilService.findById(idPerfil);
+		Empresa empresas = empresaService.findById(idEmpresa);
 		
-		if(profile == null) {
+		if(empresas == null) {
 			result.put("success", false);
-			result.put("message", "No existe el "+idPerfil+" del tipo Documento");
+			result.put("message", "No existe el "+idEmpresa+" del tipo Documento");
 		  return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
 		}
-		 perfilService.deleteFisico(profile);
+		 empresaService.deleteFisico(empresas);
 		 
 		result.put("success", true);
 		result.put("message", "Se ha eliminado correctamente");
-		result.put("data", profile);
+		result.put("data", empresas);
 		
 		return new ResponseEntity<>(result, HttpStatus.OK);
-	}
+	}*/
 	
+	
+
 }
