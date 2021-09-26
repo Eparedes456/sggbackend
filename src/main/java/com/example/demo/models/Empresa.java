@@ -13,7 +13,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Entity
-@ApiModel("Modelo de mesa")
+@ApiModel("Modelo de empresa")
 @Data
 @Table(name="empresa", schema = "public")
 public class Empresa {

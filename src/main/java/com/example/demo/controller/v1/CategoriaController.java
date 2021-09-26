@@ -15,138 +15,138 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.models.Categoria;
 import com.example.demo.models.Empresa;
-import com.example.demo.service.EmpresaService;
+import com.example.demo.service.CategoriaService;
 
 import io.swagger.annotations.ApiOperation;
 
-
 @RestController
-@RequestMapping(value = "/api/v1/empresa", produces = "Application/json")
+@RequestMapping(value = "/api/v1/categoria", produces = "Application/json")
 @CrossOrigin(origins = "*")
-public class EmpresaController {
-	
+public class CategoriaController {
+
 	@Autowired
-	private EmpresaService empresaService;
+	private CategoriaService categoriaService;
 	
-	@ApiOperation(value = "LISTA TODAS LAS EMPRESAS")
+	@ApiOperation(value = "LISTA TODAS LAS CATEGORIAS")
 	@GetMapping
-	public ResponseEntity<?> findAll() {
-		return new ResponseEntity<>(empresaService.findAll(),HttpStatus.OK);
+	public ResponseEntity<?> findAll(){
+		return new ResponseEntity<>(categoriaService.findAll(),HttpStatus.OK);
 	}
 	
 	
-	@ApiOperation(value = "BUSCA UNA EMPRESA POR SU ID")
-	@GetMapping("/{idEmpresa}")
+	@ApiOperation(value = "BUSCA UNA CATEGORIA POR SU ID")
+	@GetMapping("/{idCategoria}")
 	public ResponseEntity<?>findById(
-		     @PathVariable(value = "idEmpresa") Integer idEmpresa
+		     @PathVariable(value = "idCategoria") Integer idCategoria
 			){
 				HashMap<String, Object> result = new HashMap<>();
-				Empresa empresa = empresaService.findById(idEmpresa);
-				if(empresa == null) {
+				Categoria categoria = categoriaService.findById(idCategoria);
+				if(categoria == null) {
 					result.put("success", false);
-					result.put("message", "No existe el id "+idEmpresa+" del tipo de documento");
+					result.put("message", "No existe el id "+idCategoria+" de la categoria");
 					return new ResponseEntity<>(result,HttpStatus.NOT_FOUND);
 				}
 				
 				result.put("success", true);
-				result.put("data", empresa);
+				result.put("data", categoria);
 				return new ResponseEntity<>(result,HttpStatus.OK);
 			}
 	
-	
-	@ApiOperation(value="CREAR Y GUARDAR UNA EMPRESA")
+	@ApiOperation(value="CREAR Y GUARDAR UNA CATEGORIA")
 	@PostMapping
-	public ResponseEntity<?>insertEmpresa(
-			 @RequestBody Empresa empresa
+	public ResponseEntity<?>insertCategoria(
+			 @RequestBody Categoria categoria
 			){
 				HashMap<String, Object> result = new HashMap<>();
 				
-				Empresa empresas =	empresaService.findById(empresa.getIdEmpresa());
+				Categoria categorias =	categoriaService.findById(categoria.getIdCategoria());
 				
-				if(empresas != null) {
+				if(categorias != null) {
 				  result.put("success", false);
-				  result.put("message", "Ya existe el id "+empresa.getIdEmpresa()+" del tipo de documento");
+				  result.put("message", "Ya existe el id "+categoria.getIdCategoria()+" del tipo de documento");
 				  return new ResponseEntity<>(result,HttpStatus.CONFLICT);
 				}
-				empresa.setEstado(true);
-				empresaService.insert(empresa);
+				categoria.setEstado(true);
+				categoriaService.insert(categoria);
 				result.put("success", true);
 				result.put("message", "El resgistro se inserto correctamente");
-				result.put("data", empresa);
+				result.put("data", categorias);
 				return new ResponseEntity<>(result,HttpStatus.OK);
 					
 			}
 	
-	@ApiOperation(value="ACTUALIZAR LOS DATOS DE LA EMPRESA")
+	@ApiOperation(value="ACTUALIZAR LOS DATOS DE LA CATEGORIA")
 	@PutMapping
-	public ResponseEntity<?> updateEmpresa(
-			  @RequestBody Empresa empresa
+	public ResponseEntity<?> updateCategoria(
+			  @RequestBody Categoria categoria
 			){
 				HashMap<String, Object> result = new HashMap<>();
-				Empresa empresas = empresaService.findById(empresa.getIdEmpresa());
+				Categoria categorias = categoriaService.findById(categoria.getIdCategoria());
 				
-				if(empresas == null) {
+				if(categorias == null) {
 					result.put("success", false);
-					result.put("message", "No existe el "+empresa.getIdEmpresa()+" del tipo Documento");
+					result.put("message", "No existe el "+categoria.getIdCategoria()+" de la categoria");
 				  return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
 				}
 				
-				empresaService.update(empresa);
+				categoriaService.update(categoria);
 				
 				result.put("success", true);
 				result.put("message", "Se ha actualizado correctamente");
-				result.put("data", empresas);
+				result.put("data", categorias);
 				
 				return new ResponseEntity<>(result, HttpStatus.OK);
 			}
 	
+	
 	@ApiOperation(value="ELIMINAR UN REGISTRO")
 	@PutMapping("/delete")
-	public ResponseEntity<?> deletEmpresa(
-	 @RequestBody Empresa empresa
+	public ResponseEntity<?> deleteCategoria(
+	 @RequestBody Categoria categoria
 	){
 		HashMap<String, Object> result = new HashMap<>();
-		Empresa empresas = empresaService.findById(empresa.getIdEmpresa());
+		Categoria categorias = categoriaService.findById(categoria.getIdCategoria());
 		
-		if(empresas == null) {
+		if(categorias == null) {
 			result.put("success", false);
-			result.put("message", "No existe el "+empresa.getIdEmpresa()+" de mesa");
+			result.put("message", "No existe el "+categoria.getIdCategoria()+" de categoria");
 		  return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
 		}
 		
-		empresa.setEstado(false);
-		empresaService.delete(empresa);
+		categoria.setEstado(false);
+		categoriaService.delete(categoria);
 		
 		result.put("success", true);
 		result.put("message", "Se ha eliminado correctamente");
-		result.put("data", empresas);
+		result.put("data", categorias);
 		
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/{idEmpresa}")
-	public ResponseEntity<?>deleteFisicoEmpresa(
-	 @PathVariable(value = "idEmpresa") Integer idEmpresa
+	
+	@DeleteMapping("/{idCategoria}")
+	public ResponseEntity<?>deleteFisicoCategoria(
+	 @PathVariable(value = "idCategoria") Integer idCategoria
 	){
 		
 		HashMap<String, Object> result = new HashMap<>();
-		Empresa empresas = empresaService.findById(idEmpresa);
+		Categoria categorias = categoriaService.findById(idCategoria);
 		
-		if(empresas == null) {
+		if(categorias == null) {
 			result.put("success", false);
-			result.put("message", "No existe el "+idEmpresa+" del tipo Documento");
+			result.put("message", "No existe el "+idCategoria+"  de categoria");
 		  return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
 		}
-		 empresaService.deleteFisico(empresas);
+		categoriaService.deleteFisico(categorias);
 		 
 		result.put("success", true);
 		result.put("message", "Se ha eliminado correctamente");
-		result.put("data", empresas);
+		result.put("data", categorias);
 		
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
 	
-
 }

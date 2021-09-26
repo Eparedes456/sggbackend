@@ -15,138 +15,135 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.models.Empresa;
-import com.example.demo.service.EmpresaService;
+import com.example.demo.models.Categoria;
+import com.example.demo.models.Clientes;
+import com.example.demo.service.ClientesService;
 
 import io.swagger.annotations.ApiOperation;
 
-
 @RestController
-@RequestMapping(value = "/api/v1/empresa", produces = "Application/json")
+@RequestMapping(value = "/api/v1/clientes", produces = "Application/json")
 @CrossOrigin(origins = "*")
-public class EmpresaController {
+public class ClientesController {
 	
 	@Autowired
-	private EmpresaService empresaService;
+	private ClientesService clienteService;
 	
-	@ApiOperation(value = "LISTA TODAS LAS EMPRESAS")
+	@ApiOperation(value = "LISTA TODOS LOS CLIENTES")
 	@GetMapping
-	public ResponseEntity<?> findAll() {
-		return new ResponseEntity<>(empresaService.findAll(),HttpStatus.OK);
+	public ResponseEntity<?> findAll(){
+		return new ResponseEntity<>(clienteService.findAll(),HttpStatus.OK);
 	}
 	
 	
-	@ApiOperation(value = "BUSCA UNA EMPRESA POR SU ID")
-	@GetMapping("/{idEmpresa}")
+	@ApiOperation(value = "BUSCA UN CLIENTE POR SU ID")
+	@GetMapping("/{idClinica}")
 	public ResponseEntity<?>findById(
-		     @PathVariable(value = "idEmpresa") Integer idEmpresa
+		     @PathVariable(value = "idClinica") Integer idCliente
 			){
 				HashMap<String, Object> result = new HashMap<>();
-				Empresa empresa = empresaService.findById(idEmpresa);
-				if(empresa == null) {
+				Clientes clientes = clienteService.findById(idCliente);
+				if(clientes == null) {
 					result.put("success", false);
-					result.put("message", "No existe el id "+idEmpresa+" del tipo de documento");
+					result.put("message", "No existe el id "+idCliente+" de la categoria");
 					return new ResponseEntity<>(result,HttpStatus.NOT_FOUND);
 				}
 				
 				result.put("success", true);
-				result.put("data", empresa);
+				result.put("data", clientes);
 				return new ResponseEntity<>(result,HttpStatus.OK);
 			}
 	
-	
-	@ApiOperation(value="CREAR Y GUARDAR UNA EMPRESA")
+	@ApiOperation(value="CREAR Y GUARDAR UN CLIENTE")
 	@PostMapping
-	public ResponseEntity<?>insertEmpresa(
-			 @RequestBody Empresa empresa
+	public ResponseEntity<?>insertCliente(
+			 @RequestBody Clientes cliente
 			){
 				HashMap<String, Object> result = new HashMap<>();
 				
-				Empresa empresas =	empresaService.findById(empresa.getIdEmpresa());
+				Clientes clientes =	clienteService.findById(cliente.getIdCliente());
 				
-				if(empresas != null) {
+				if(clientes != null) {
 				  result.put("success", false);
-				  result.put("message", "Ya existe el id "+empresa.getIdEmpresa()+" del tipo de documento");
+				  result.put("message", "Ya existe el id "+cliente.getIdCliente()+" del tipo de documento");
 				  return new ResponseEntity<>(result,HttpStatus.CONFLICT);
 				}
-				empresa.setEstado(true);
-				empresaService.insert(empresa);
+				cliente.setEstado(true);
+				clienteService.insert(cliente);
 				result.put("success", true);
 				result.put("message", "El resgistro se inserto correctamente");
-				result.put("data", empresa);
+				result.put("data", clientes);
 				return new ResponseEntity<>(result,HttpStatus.OK);
 					
 			}
 	
-	@ApiOperation(value="ACTUALIZAR LOS DATOS DE LA EMPRESA")
+	@ApiOperation(value="ACTUALIZAR LOS DATOS DE LOS CLIENTES")
 	@PutMapping
-	public ResponseEntity<?> updateEmpresa(
-			  @RequestBody Empresa empresa
+	public ResponseEntity<?> updateClientes(
+			  @RequestBody Clientes cliente
 			){
 				HashMap<String, Object> result = new HashMap<>();
-				Empresa empresas = empresaService.findById(empresa.getIdEmpresa());
+				Clientes clientes = clienteService.findById(cliente.getIdCliente());
 				
-				if(empresas == null) {
+				if(clientes == null) {
 					result.put("success", false);
-					result.put("message", "No existe el "+empresa.getIdEmpresa()+" del tipo Documento");
+					result.put("message", "No existe el "+cliente.getIdCliente()+" de la categoria");
 				  return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
 				}
 				
-				empresaService.update(empresa);
+				clienteService.update(cliente);
 				
 				result.put("success", true);
 				result.put("message", "Se ha actualizado correctamente");
-				result.put("data", empresas);
+				result.put("data", clientes);
 				
 				return new ResponseEntity<>(result, HttpStatus.OK);
 			}
 	
 	@ApiOperation(value="ELIMINAR UN REGISTRO")
 	@PutMapping("/delete")
-	public ResponseEntity<?> deletEmpresa(
-	 @RequestBody Empresa empresa
+	public ResponseEntity<?> deleteCategoria(
+	 @RequestBody Clientes cliente
 	){
 		HashMap<String, Object> result = new HashMap<>();
-		Empresa empresas = empresaService.findById(empresa.getIdEmpresa());
+		Clientes clientes = clienteService.findById(cliente.getIdCliente());
 		
-		if(empresas == null) {
+		if(clientes == null) {
 			result.put("success", false);
-			result.put("message", "No existe el "+empresa.getIdEmpresa()+" de mesa");
+			result.put("message", "No existe el "+cliente.getIdCliente()+" de categoria");
 		  return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
 		}
 		
-		empresa.setEstado(false);
-		empresaService.delete(empresa);
+		cliente.setEstado(false);
+		clienteService.delete(cliente);
 		
 		result.put("success", true);
 		result.put("message", "Se ha eliminado correctamente");
-		result.put("data", empresas);
+		result.put("data", clientes);
 		
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/{idEmpresa}")
-	public ResponseEntity<?>deleteFisicoEmpresa(
-	 @PathVariable(value = "idEmpresa") Integer idEmpresa
+	@DeleteMapping("/{idCliente}")
+	public ResponseEntity<?>deleteFisicoCategoria(
+	 @PathVariable(value = "idCliente") Integer idCliente
 	){
 		
 		HashMap<String, Object> result = new HashMap<>();
-		Empresa empresas = empresaService.findById(idEmpresa);
+		Clientes clientes = clienteService.findById(idCliente);
 		
-		if(empresas == null) {
+		if(clientes == null) {
 			result.put("success", false);
-			result.put("message", "No existe el "+idEmpresa+" del tipo Documento");
+			result.put("message", "No existe el "+idCliente+"  de categoria");
 		  return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
 		}
-		 empresaService.deleteFisico(empresas);
+		clienteService.deleteFisico(clientes);
 		 
 		result.put("success", true);
 		result.put("message", "Se ha eliminado correctamente");
-		result.put("data", empresas);
+		result.put("data", clientes);
 		
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
-	
-
 }
