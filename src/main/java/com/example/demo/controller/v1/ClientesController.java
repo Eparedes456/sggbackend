@@ -37,7 +37,7 @@ public class ClientesController {
 	
 	
 	@ApiOperation(value = "BUSCA UN CLIENTE POR SU ID")
-	@GetMapping("/{idClinica}")
+	@GetMapping("/{idCliente}")
 	public ResponseEntity<?>findById(
 		     @PathVariable(value = "idClinica") Integer idCliente
 			){
