@@ -14,90 +14,92 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.example.demo.models.Compra;
+import com.example.demo.models.DetalleCompra;
 import com.example.demo.service.CompraService;
+import com.example.demo.service.DetalleCompraService;
 
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping(value = "/api/v1/compra", produces = "Application/json")
+@RequestMapping(value = "/api/v1/detallecompra", produces = "Application/json")
 @CrossOrigin(origins = "*")
-public class CompraController {
-	
+public class DetalleCompraController {
+
 	@Autowired
-	private CompraService compraService;
+	private DetalleCompraService detalleCompraService;
 	
-	@ApiOperation(value = "LISTA TODAS LAS COMPRAS")
+	@ApiOperation(value = "LISTA TODOS LOS DETALLES COMPRAS")
 	@GetMapping
 	public ResponseEntity<?> findAll(){
-		return new ResponseEntity<>(compraService.findAll(),HttpStatus.OK);
+		return new ResponseEntity<>(detalleCompraService.findAll(),HttpStatus.OK);
 	}
 	
-	
-	
-	@ApiOperation(value = "BUSCA UNA COMPRA POR SU ID")
-	@GetMapping("/{idCompra}")
+	@ApiOperation(value = "BUSCA UN DETALLE COMPRA POR SU ID")
+	@GetMapping("/{idDetalleCompra}")
 	public ResponseEntity<?>findById(
-		     @PathVariable(value = "idCompra") Integer idCompra
+		     @PathVariable(value = "idDetalleCompra") Integer idDetalleCompra
 			){
 				HashMap<String, Object> result = new HashMap<>();
-				Compra compras = compraService.findById(idCompra);
-				if(compras == null) {
+				DetalleCompra detalleCompras = detalleCompraService.findById(idDetalleCompra);
+				if(detalleCompras == null) {
 					result.put("success", false);
-					result.put("message", "No existe el id "+idCompra+" de la compra");
+					result.put("message", "No existe el id "+idDetalleCompra+" de la compra");
 					return new ResponseEntity<>(result,HttpStatus.NOT_FOUND);
 				}
 				
 				result.put("success", true);
-				result.put("data", compras);
+				result.put("data", detalleCompras);
 				return new ResponseEntity<>(result,HttpStatus.OK);
 			}
 	
-	@ApiOperation(value="CREAR Y GUARDAR UNA COMPRA")
+	
+	
+	@ApiOperation(value="CREAR Y GUARDAR UN DETALLE COMPRA")
 	@PostMapping
-	public ResponseEntity<?>insertCompra(
+	public ResponseEntity<?>insertDetalleCompra(
 			
-			@RequestBody Compra compra
+			@RequestBody DetalleCompra detalleCompra
 	){
 				HashMap<String, Object> result = new HashMap<>();
 				
-				Compra compras =	compraService.findById(compra.getIdCompra());
+				DetalleCompra detalleCompras =	detalleCompraService.findById(detalleCompra.getIdDetalleCompra());
 				
-				if(compras != null) {
+				if(detalleCompras != null) {
 				  result.put("success", false);
-				  result.put("message", "Ya existe el id "+compra.getIdCompra()+" de la compra");
+				  result.put("message", "Ya existe el id "+detalleCompra.getIdDetalleCompra()+" del detalle de la compra");
 				  return new ResponseEntity<>(result,HttpStatus.CONFLICT);
 				}
-				compra.setEstado(true);
-				compraService.insert(compra);
+				detalleCompra.setEstado(true);
+				detalleCompraService.insert(detalleCompra);
 				result.put("success", true);
 				result.put("message", "El resgistro se inserto correctamente");
-				result.put("data", compras);
+				result.put("data", detalleCompras);
 				return new ResponseEntity<>(result,HttpStatus.OK);
 					
 	}
 	
 	
-	
-	@ApiOperation(value="ACTUALIZAR LOS DATOS DE UNA COMPRA")
+	@ApiOperation(value="ACTUALIZAR LOS DATOS DEL DETALLE DE LA COMPRA")
 	@PutMapping
-	public ResponseEntity<?> updateCompras(
-			  @RequestBody Compra compra
+	public ResponseEntity<?> updateDeleteCompras(
+			  @RequestBody DetalleCompra detalleCompra
 			){
 				HashMap<String, Object> result = new HashMap<>();
-				Compra compras = compraService.findById(compra.getIdCompra());
+				DetalleCompra detalleCompras = detalleCompraService.findById(detalleCompra.getIdDetalleCompra());
 				
-				if(compras == null) {
+				if(detalleCompras == null) {
 					result.put("success", false);
-					result.put("message", "No existe el "+compra.getIdCompra()+" de empleado");
+					result.put("message", "No existe el "+detalleCompra.getIdDetalleCompra()+" del detalle de la compra");
 				  return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
 				}
 				
-				compraService.update(compra);
+				detalleCompraService.update(detalleCompra);
 				
 				result.put("success", true);
 				result.put("message", "Se ha actualizado correctamente");
-				result.put("data", compras);
+				result.put("data", detalleCompras);
 				
 				return new ResponseEntity<>(result, HttpStatus.OK);
 	}
@@ -105,50 +107,51 @@ public class CompraController {
 	
 	@ApiOperation(value="ELIMINAR UN REGISTRO")
 	@PutMapping("/delete")
-	public ResponseEntity<?> deleteCompra(
-	 @RequestBody Compra compra
+	public ResponseEntity<?> deleteDetalleCompra(
+	 @RequestBody DetalleCompra detalleCompra
 	){
 		HashMap<String, Object> result = new HashMap<>();
-		Compra compras = compraService.findById(compra.getIdCompra());
+		DetalleCompra detalleCompras = detalleCompraService.findById(detalleCompra.getIdDetalleCompra());
 		
-		if(compras == null) {
+		if(detalleCompras == null) {
 			result.put("success", false);
-			result.put("message", "No existe el "+compra.getIdCompra()+" de la compra");
+			result.put("message", "No existe el "+detalleCompra.getIdDetalleCompra()+" del detalle de la compra");
 		  return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
 		}
 		
-		compra.setEstado(false);
-		compraService.delete(compra);
+		detalleCompra.setEstado(false);
+		detalleCompraService.delete(detalleCompra);
 		
 		result.put("success", true);
 		result.put("message", "Se ha eliminado correctamente");
-		result.put("data", compras);
+		result.put("data", detalleCompras);
 		
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
 	
-	@DeleteMapping("/{idCompra}")
-	public ResponseEntity<?>deleteFisicoCompra(
-	 @PathVariable(value = "idCompra") Integer idCompra
+	
+	@DeleteMapping("/{idDetalleCompra}")
+	public ResponseEntity<?>deleteFisicoDetalleCompra(
+	 @PathVariable(value = "idDetalleCompra") Integer idDetalleCompra
 	){
 		
 		HashMap<String, Object> result = new HashMap<>();
-		Compra compras = compraService.findById(idCompra);
+		DetalleCompra detalleCompras = detalleCompraService.findById(idDetalleCompra);
 		
-		if(compras == null) {
+		if(detalleCompras == null) {
 			result.put("success", false);
-			result.put("message", "No existe el "+idCompra+"  de la compra");
+			result.put("message", "No existe el "+idDetalleCompra+"  del Detalle de la compra");
 		  return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
 		}
-		compraService.deleteFisico(compras);
+		detalleCompraService.deleteFisico(detalleCompras);
 		 
 		result.put("success", true);
 		result.put("message", "Se ha eliminado correctamente");
-		result.put("data", compras);
+		result.put("data", detalleCompras);
 		
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
-
+	
 }
