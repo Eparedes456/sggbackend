@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -77,5 +79,78 @@ public class ExtraController {
 				return new ResponseEntity<>(result,HttpStatus.OK);
 					
 			}
+	
+	
+	@ApiOperation(value="ACTUALIZAR LOS DATOS DEL EXTRA")
+	@PutMapping
+	public ResponseEntity<?> updateExtra(
+			  @RequestBody Extra extra
+			){
+				HashMap<String, Object> result = new HashMap<>();
+				Extra extras = extraService.findById(extra.getIdExtra());
+				
+				if(extras == null) {
+					result.put("success", false);
+					result.put("message", "No existe el "+extra.getIdExtra()+" de extra");
+				  return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+				}
+				
+				extraService.update(extras);
+				
+				result.put("success", true);
+				result.put("message", "Se ha actualizado correctamente");
+				result.put("data", extras);
+				
+				return new ResponseEntity<>(result, HttpStatus.OK);
+			}
+	
+	
+	@ApiOperation(value="ELIMINAR UN REGISTRO")
+	@PutMapping("/delete")
+	public ResponseEntity<?> deleteExtra(
+	 @RequestBody Extra extra
+	){
+		HashMap<String, Object> result = new HashMap<>();
+		Extra extras = extraService.findById(extra.getIdExtra());
+		
+		if(extras == null) {
+			result.put("success", false);
+			result.put("message", "No existe el "+extra.getIdExtra()+" de extra");
+		  return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+		}
+		
+		extra.setEstado(false);
+		extraService.delete(extra);
+		
+		result.put("success", true);
+		result.put("message", "Se ha eliminado correctamente");
+		result.put("data", extras);
+		
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
+	
+	@DeleteMapping("/{idExtra}")
+	public ResponseEntity<?>deleteFisicoExtra(
+	 @PathVariable(value = "idExtra") Integer idExtra
+	){
+		
+		HashMap<String, Object> result = new HashMap<>();
+		Extra extras = extraService.findById(idExtra);
+		
+		if(extras == null) {
+			result.put("success", false);
+			result.put("message", "No existe el "+idExtra+" de extra");
+		  return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+		}
+		 extraService.deleteFisico(extras);
+		 
+		result.put("success", true);
+		result.put("message", "Se ha eliminado correctamente");
+		result.put("data", extras);
+		
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
 
 }
