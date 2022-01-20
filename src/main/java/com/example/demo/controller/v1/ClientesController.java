@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.Authorization;
 
 import com.example.demo.models.Categoria;
 import com.example.demo.models.Clientes;
@@ -29,14 +30,14 @@ public class ClientesController {
 	@Autowired
 	private ClientesService clienteService;
 	
-	@ApiOperation(value = "LISTA TODOS LOS CLIENTES")
+	@ApiOperation(value = "LISTA TODOS LOS CLIENTES", authorizations = {@Authorization(value = "apiKey")} )
 	@GetMapping
 	public ResponseEntity<?> findAll(){
 		return new ResponseEntity<>(clienteService.findAll(),HttpStatus.OK);
 	}
 	
 	
-	@ApiOperation(value = "BUSCA UN CLIENTE POR SU ID")
+	@ApiOperation(value = "BUSCA UN CLIENTE POR SU ID" , authorizations = {@Authorization(value = "apiKey")})
 	@GetMapping("/{idCliente}")
 	public ResponseEntity<?>findById(
 		     @PathVariable(value = "idClinica") Integer idCliente
@@ -54,7 +55,7 @@ public class ClientesController {
 				return new ResponseEntity<>(result,HttpStatus.OK);
 			}
 	
-	@ApiOperation(value="CREAR Y GUARDAR UN CLIENTE")
+	@ApiOperation(value="CREAR Y GUARDAR UN CLIENTE" , authorizations = {@Authorization(value = "apiKey")})
 	@PostMapping
 	public ResponseEntity<?>insertCliente(
 			 @RequestBody Clientes cliente
@@ -77,7 +78,7 @@ public class ClientesController {
 					
 			}
 	
-	@ApiOperation(value="ACTUALIZAR LOS DATOS DE LOS CLIENTES")
+	@ApiOperation(value="ACTUALIZAR LOS DATOS DE LOS CLIENTES", authorizations = {@Authorization(value = "apiKey")})
 	@PutMapping
 	public ResponseEntity<?> updateClientes(
 			  @RequestBody Clientes cliente
@@ -100,7 +101,7 @@ public class ClientesController {
 				return new ResponseEntity<>(result, HttpStatus.OK);
 			}
 	
-	@ApiOperation(value="ELIMINAR UN REGISTRO")
+	@ApiOperation(value="ELIMINAR UN REGISTRO" , authorizations = {@Authorization(value = "apiKey")})
 	@PutMapping("/delete")
 	public ResponseEntity<?> deleteCategoria(
 	 @RequestBody Clientes cliente

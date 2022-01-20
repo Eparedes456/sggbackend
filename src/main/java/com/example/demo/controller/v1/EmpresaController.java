@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.Authorization;
 
 import com.example.demo.models.Empresa;
 import com.example.demo.service.EmpresaService;
@@ -29,14 +30,14 @@ public class EmpresaController {
 	@Autowired
 	private EmpresaService empresaService;
 	
-	@ApiOperation(value = "LISTA TODAS LAS EMPRESAS")
+	@ApiOperation(value = "LISTA TODAS LAS EMPRESAS" , authorizations = {@Authorization(value = "apiKey")})
 	@GetMapping
 	public ResponseEntity<?> findAll() {
 		return new ResponseEntity<>(empresaService.findAll(),HttpStatus.OK);
 	}
 	
 	
-	@ApiOperation(value = "BUSCA UNA EMPRESA POR SU ID")
+	@ApiOperation(value = "BUSCA UNA EMPRESA POR SU ID" , authorizations = {@Authorization(value = "apiKey")})
 	@GetMapping("/{idEmpresa}")
 	public ResponseEntity<?>findById(
 		     @PathVariable(value = "idEmpresa") Integer idEmpresa
@@ -55,7 +56,7 @@ public class EmpresaController {
 			}
 	
 	
-	@ApiOperation(value="CREAR Y GUARDAR UNA EMPRESA")
+	@ApiOperation(value="CREAR Y GUARDAR UNA EMPRESA" , authorizations = {@Authorization(value = "apiKey")})
 	@PostMapping
 	public ResponseEntity<?>insertEmpresa(
 			 @RequestBody Empresa empresa
@@ -78,7 +79,7 @@ public class EmpresaController {
 					
 			}
 	
-	@ApiOperation(value="ACTUALIZAR LOS DATOS DE LA EMPRESA")
+	@ApiOperation(value="ACTUALIZAR LOS DATOS DE LA EMPRESA" , authorizations = {@Authorization(value = "apiKey")})
 	@PutMapping
 	public ResponseEntity<?> updateEmpresa(
 			  @RequestBody Empresa empresa
@@ -101,7 +102,7 @@ public class EmpresaController {
 				return new ResponseEntity<>(result, HttpStatus.OK);
 			}
 	
-	@ApiOperation(value="ELIMINAR UN REGISTRO")
+	@ApiOperation(value="ELIMINAR UN REGISTRO" , authorizations = {@Authorization(value = "apiKey")})
 	@PutMapping("/delete")
 	public ResponseEntity<?> deletEmpresa(
 	 @RequestBody Empresa empresa

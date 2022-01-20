@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.Authorization;
 
 import com.example.demo.models.Empresa;
 import com.example.demo.models.Extra;
@@ -30,14 +31,14 @@ public class ExtraController {
 	@Autowired
 	private ExtraService extraService;
 	
-	@ApiOperation(value = "LISTA TODOS LOS REGISTROS DE EXTRAS")
+	@ApiOperation(value = "LISTA TODOS LOS REGISTROS DE EXTRAS" , authorizations = {@Authorization(value = "apiKey")})
 	@GetMapping
 	public ResponseEntity<?> findAll() {
 		return new ResponseEntity<>(extraService.findAll(),HttpStatus.OK);
 	}
 	
 	
-	@ApiOperation(value = "BUSCA UN EXTRA POR SU ID")
+	@ApiOperation(value = "BUSCA UN EXTRA POR SU ID" , authorizations = {@Authorization(value = "apiKey")})
 	@GetMapping("/{idExtra}")
 	public ResponseEntity<?>findById(
 		     @PathVariable(value = "idExtra") Integer idExtra
@@ -57,7 +58,7 @@ public class ExtraController {
 	
 	
 	
-	@ApiOperation(value="CREAR Y GUARDAR UN EXTRA")
+	@ApiOperation(value="CREAR Y GUARDAR UN EXTRA" , authorizations = {@Authorization(value = "apiKey")})
 	@PostMapping
 	public ResponseEntity<?>insertExtra(
 			 @RequestBody Extra extra
@@ -81,7 +82,7 @@ public class ExtraController {
 			}
 	
 	
-	@ApiOperation(value="ACTUALIZAR LOS DATOS DEL EXTRA")
+	@ApiOperation(value="ACTUALIZAR LOS DATOS DEL EXTRA" , authorizations = {@Authorization(value = "apiKey")})
 	@PutMapping
 	public ResponseEntity<?> updateExtra(
 			  @RequestBody Extra extra
@@ -105,7 +106,7 @@ public class ExtraController {
 			}
 	
 	
-	@ApiOperation(value="ELIMINAR UN REGISTRO")
+	@ApiOperation(value="ELIMINAR UN REGISTRO" , authorizations = {@Authorization(value = "apiKey")})
 	@PutMapping("/delete")
 	public ResponseEntity<?> deleteExtra(
 	 @RequestBody Extra extra

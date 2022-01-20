@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.models.Proveedor;
 import com.example.demo.service.ProveedorService;
+import io.swagger.annotations.Authorization;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -27,12 +28,12 @@ public class ProveedorController {
 	@Autowired
 	private ProveedorService proveedorService;
 	
-	@ApiOperation(value = "LISTA TODOS LOS PROVEEDOR")
+	@ApiOperation(value = "LISTA TODOS LOS PROVEEDOR" , authorizations = {@Authorization(value = "apiKey")})
 	@GetMapping
 	public ResponseEntity<?> findAll(){
 		return new ResponseEntity<>(proveedorService.findAll(),HttpStatus.OK);
 	}
-	@ApiOperation(value = "BUSCA UN PROVEEDOR POR SU ID")
+	@ApiOperation(value = "BUSCA UN PROVEEDOR POR SU ID" , authorizations = {@Authorization(value = "apiKey")})
 	@GetMapping("/{idProveedor}")
 	public ResponseEntity<?>findById(
 		     @PathVariable(value = "idProveedor") Integer idProveedor
@@ -51,7 +52,7 @@ public class ProveedorController {
 	}
 	
 	
-	@ApiOperation(value="CREAR Y GUARDAR UN PROVEEDOR")
+	@ApiOperation(value="CREAR Y GUARDAR UN PROVEEDOR" , authorizations = {@Authorization(value = "apiKey")})
 	@PostMapping
 	public ResponseEntity<?>insertProveedor(
 			
@@ -77,7 +78,7 @@ public class ProveedorController {
 	
 	
 	
-	@ApiOperation(value="ACTUALIZAR LOS DATOS DEL PROVEEDOR")
+	@ApiOperation(value="ACTUALIZAR LOS DATOS DEL PROVEEDOR" , authorizations = {@Authorization(value = "apiKey")})
 	@PutMapping
 	public ResponseEntity<?> updateProveedor(
 			  @RequestBody Proveedor proveedor
@@ -101,7 +102,7 @@ public class ProveedorController {
 	}
 	
 	
-	@ApiOperation(value="ELIMINAR UN REGISTRO")
+	@ApiOperation(value="ELIMINAR UN REGISTRO" , authorizations = {@Authorization(value = "apiKey")})
 	@PutMapping("/delete")
 	public ResponseEntity<?> deleteProveedor(
 	 @RequestBody Proveedor proveedor

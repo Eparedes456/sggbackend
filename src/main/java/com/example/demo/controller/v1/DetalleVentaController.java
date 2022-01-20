@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.Authorization;
 
 import com.example.demo.models.DetalleCompra;
 import com.example.demo.models.DetalleVenta;
@@ -29,14 +30,14 @@ public class DetalleVentaController {
 	@Autowired
 	private DetalleVentaService detalleVentaService;
 	
-	@ApiOperation(value = "LISTA TODOS LOS DETALLES VENTAS")
+	@ApiOperation(value = "LISTA TODOS LOS DETALLES VENTAS" , authorizations = {@Authorization(value = "apiKey")} )
 	@GetMapping
 	public ResponseEntity<?> findAll(){
 		return new ResponseEntity<>(detalleVentaService.findAll(),HttpStatus.OK);
 	}
 	
 	
-	@ApiOperation(value="CREAR Y GUARDAR UN DETALLE VENTAS")
+	@ApiOperation(value="CREAR Y GUARDAR UN DETALLE VENTAS" , authorizations = {@Authorization(value = "apiKey")})
 	@PostMapping
 	public ResponseEntity<?>insertDetalleCompra(
 			
@@ -62,7 +63,7 @@ public class DetalleVentaController {
 	
 	
 	
-	@ApiOperation(value="ACTUALIZAR LOS DATOS DEL DETALLE DE LA VENTA")
+	@ApiOperation(value="ACTUALIZAR LOS DATOS DEL DETALLE DE LA VENTA" , authorizations = {@Authorization(value = "apiKey")})
 	@PutMapping
 	public ResponseEntity<?> updateDeleteCompras(
 			  @RequestBody DetalleVenta detalleVenta
@@ -87,7 +88,7 @@ public class DetalleVentaController {
 	
 	
 	
-	@ApiOperation(value="ELIMINAR UN REGISTRO")
+	@ApiOperation(value="ELIMINAR UN REGISTRO" , authorizations = {@Authorization(value = "apiKey")})
 	@PutMapping("/delete")
 	public ResponseEntity<?> deleteDetalleVenta(
 	 @RequestBody DetalleVenta detalleVenta

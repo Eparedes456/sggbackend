@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.Authorization;
 
 
 import com.example.demo.service.PermisosService;
@@ -22,7 +23,7 @@ public class PermisosController {
 	private PermisosService permisosService;
 	
 	
-	@ApiOperation(value = "LISTAR TODOS LOS PERMISOS")
+	@ApiOperation(value = "LISTAR TODOS LOS PERMISOS" , authorizations = {@Authorization(value = "apiKey")})
 	@GetMapping
 	public ResponseEntity<?> findAllPermisos() {
 		return new ResponseEntity<>(permisosService.findAll(),HttpStatus.OK);

@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.Authorization;
+
 import com.example.demo.models.Compra;
 import com.example.demo.service.CompraService;
 
@@ -27,7 +29,7 @@ public class CompraController {
 	@Autowired
 	private CompraService compraService;
 	
-	@ApiOperation(value = "LISTA TODAS LAS COMPRAS")
+	@ApiOperation(value = "LISTA TODAS LAS COMPRAS" , authorizations = {@Authorization(value = "apiKey")})
 	@GetMapping
 	public ResponseEntity<?> findAll(){
 		return new ResponseEntity<>(compraService.findAll(),HttpStatus.OK);
@@ -35,7 +37,7 @@ public class CompraController {
 	
 	
 	
-	@ApiOperation(value = "BUSCA UNA COMPRA POR SU ID")
+	@ApiOperation(value = "BUSCA UNA COMPRA POR SU ID" , authorizations = {@Authorization(value = "apiKey")})
 	@GetMapping("/{idCompra}")
 	public ResponseEntity<?>findById(
 		     @PathVariable(value = "idCompra") Integer idCompra
@@ -53,7 +55,7 @@ public class CompraController {
 				return new ResponseEntity<>(result,HttpStatus.OK);
 			}
 	
-	@ApiOperation(value="CREAR Y GUARDAR UNA COMPRA")
+	@ApiOperation(value="CREAR Y GUARDAR UNA COMPRA" , authorizations = {@Authorization(value = "apiKey")})
 	@PostMapping
 	public ResponseEntity<?>insertCompra(
 			
@@ -79,7 +81,7 @@ public class CompraController {
 	
 	
 	
-	@ApiOperation(value="ACTUALIZAR LOS DATOS DE UNA COMPRA")
+	@ApiOperation(value="ACTUALIZAR LOS DATOS DE UNA COMPRA" , authorizations = {@Authorization(value = "apiKey")})
 	@PutMapping
 	public ResponseEntity<?> updateCompras(
 			  @RequestBody Compra compra
@@ -103,7 +105,7 @@ public class CompraController {
 	}
 	
 	
-	@ApiOperation(value="ELIMINAR UN REGISTRO")
+	@ApiOperation(value="ELIMINAR UN REGISTRO",  authorizations = {@Authorization(value = "apiKey")})
 	@PutMapping("/delete")
 	public ResponseEntity<?> deleteCompra(
 	 @RequestBody Compra compra

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.Authorization;
 
 import com.example.demo.models.Producto_Categoria;
 import com.example.demo.models.Producto_extra;
@@ -31,14 +32,14 @@ public class ProductoExtraController {
 	private ProductoExtraService productoExtraService;
 	
 	
-	@ApiOperation(value = "LISTA TODOS LOS EXTRAS PERTENECIENTE A UNO O VARIOS PRODUCTOS")
+	@ApiOperation(value = "LISTA TODOS LOS EXTRAS PERTENECIENTE A UNO O VARIOS PRODUCTOS" , authorizations = {@Authorization(value = "apiKey")})
 	@GetMapping
 	public ResponseEntity<?> findAll(){
 		return new ResponseEntity<>(productoExtraService.findAll(),HttpStatus.OK);
 	}
 	
 	
-	@ApiOperation(value = "BUSCA UNA EXTRA POR PRODUCTO POR SU ID")
+	@ApiOperation(value = "BUSCA UNA EXTRA POR PRODUCTO POR SU ID" , authorizations = {@Authorization(value = "apiKey")})
 	@GetMapping("/{idProductoExtra}")
 	public ResponseEntity<?>findById(
 		     @PathVariable(value = "idProductoExtra") Integer idProductoExtra
@@ -60,7 +61,7 @@ public class ProductoExtraController {
 	
 	
 	
-	@ApiOperation(value="CREAR Y GUARDAR UN PRODUCTO EXTRA")
+	@ApiOperation(value="CREAR Y GUARDAR UN PRODUCTO EXTRA" , authorizations = {@Authorization(value = "apiKey")})
 	@PostMapping
 	public ResponseEntity<?>insertProductoCategoria(
 			 @RequestBody Producto_extra productoExtra
@@ -85,7 +86,7 @@ public class ProductoExtraController {
 	
 	
 	
-	@ApiOperation(value="ACTUALIZAR LOS DATOS DE UN PRODUCTO CATEGORIA")
+	@ApiOperation(value="ACTUALIZAR LOS DATOS DE UN PRODUCTO CATEGORIA" , authorizations = {@Authorization(value = "apiKey")})
 	@PutMapping
 	public ResponseEntity<?> updateProductoCategoria(
 			  @RequestBody Producto_extra productoExtra
@@ -112,7 +113,7 @@ public class ProductoExtraController {
 	
 	
 	
-	@ApiOperation(value="ELIMINAR UN REGISTRO")
+	@ApiOperation(value="ELIMINAR UN REGISTRO" , authorizations = {@Authorization(value = "apiKey")})
 	@PutMapping("/delete")
 	public ResponseEntity<?> deleteProductoExtra(
 	 @RequestBody Producto_extra productoExtra

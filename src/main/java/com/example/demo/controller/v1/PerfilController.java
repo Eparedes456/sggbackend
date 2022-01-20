@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.Authorization;
 
 import com.example.demo.models.Mesa;
 import com.example.demo.models.Perfil;
@@ -30,7 +31,7 @@ public class PerfilController {
 	@Autowired
 	private PerfilService perfilService;
 	
-	@ApiOperation(value = "LISTAR TODOS LOS PERFILES")
+	@ApiOperation(value = "LISTAR TODOS LOS PERFILES"  , authorizations = {@Authorization(value = "apiKey")})
 	@GetMapping
 	public ResponseEntity<?> findAllPerfiles() {
 		return new ResponseEntity<>(perfilService.findAll(),HttpStatus.OK);
@@ -54,7 +55,7 @@ public class PerfilController {
 				return new ResponseEntity<>(result,HttpStatus.OK);
 			}
 	
-	@ApiOperation(value="CREAR Y GUARDAR UN PERFIL")
+	@ApiOperation(value="CREAR Y GUARDAR UN PERFIL"  , authorizations = {@Authorization(value = "apiKey")})
 	@PostMapping
 	public ResponseEntity<?>insertPerfil(
 			 @RequestBody Perfil perfil
@@ -80,7 +81,7 @@ public class PerfilController {
 			}
 	
 	
-	@ApiOperation(value="ACTUALIZAR LOS DATOS DE UN PERFIL")
+	@ApiOperation(value="ACTUALIZAR LOS DATOS DE UN PERFIL"  , authorizations = {@Authorization(value = "apiKey")})
 	@PutMapping
 	public ResponseEntity<?> updatePerfil(
 			  @RequestBody Perfil perfil
@@ -103,7 +104,7 @@ public class PerfilController {
 				return new ResponseEntity<>(result, HttpStatus.OK);
 			}
 	
-	@ApiOperation(value="ELIMINAR UN REGISTRO")
+	@ApiOperation(value="ELIMINAR UN REGISTRO"  , authorizations = {@Authorization(value = "apiKey")})
 	@PutMapping("/delete")
 	public ResponseEntity<?> deletePerfil(
 	 @RequestBody Perfil perfil

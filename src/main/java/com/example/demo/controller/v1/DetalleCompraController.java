@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.Authorization;
 
 import com.example.demo.models.Compra;
 import com.example.demo.models.DetalleCompra;
@@ -30,13 +31,13 @@ public class DetalleCompraController {
 	@Autowired
 	private DetalleCompraService detalleCompraService;
 	
-	@ApiOperation(value = "LISTA TODOS LOS DETALLES COMPRAS")
+	@ApiOperation(value = "LISTA TODOS LOS DETALLES COMPRAS" , authorizations = {@Authorization(value = "apiKey")})
 	@GetMapping
 	public ResponseEntity<?> findAll(){
 		return new ResponseEntity<>(detalleCompraService.findAll(),HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "BUSCA UN DETALLE COMPRA POR SU ID")
+	@ApiOperation(value = "BUSCA UN DETALLE COMPRA POR SU ID" , authorizations = {@Authorization(value = "apiKey")})
 	@GetMapping("/{idDetalleCompra}")
 	public ResponseEntity<?>findById(
 		     @PathVariable(value = "idDetalleCompra") Integer idDetalleCompra
@@ -56,7 +57,7 @@ public class DetalleCompraController {
 	
 	
 	
-	@ApiOperation(value="CREAR Y GUARDAR UN DETALLE COMPRA")
+	@ApiOperation(value="CREAR Y GUARDAR UN DETALLE COMPRA" , authorizations = {@Authorization(value = "apiKey")})
 	@PostMapping
 	public ResponseEntity<?>insertDetalleCompra(
 			
@@ -81,7 +82,7 @@ public class DetalleCompraController {
 	}
 	
 	
-	@ApiOperation(value="ACTUALIZAR LOS DATOS DEL DETALLE DE LA COMPRA")
+	@ApiOperation(value="ACTUALIZAR LOS DATOS DEL DETALLE DE LA COMPRA", authorizations = {@Authorization(value = "apiKey")})
 	@PutMapping
 	public ResponseEntity<?> updateDeleteCompras(
 			  @RequestBody DetalleCompra detalleCompra
@@ -105,7 +106,7 @@ public class DetalleCompraController {
 	}
 	
 	
-	@ApiOperation(value="ELIMINAR UN REGISTRO")
+	@ApiOperation(value="ELIMINAR UN REGISTRO" , authorizations = {@Authorization(value = "apiKey")})
 	@PutMapping("/delete")
 	public ResponseEntity<?> deleteDetalleCompra(
 	 @RequestBody DetalleCompra detalleCompra

@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.example.demo.models.Categoria;
+
 import com.example.demo.models.Usuarios;
 import com.example.demo.service.UsuarioService;
 
@@ -28,6 +29,9 @@ public class UsuarioController {
 
 	@Autowired
 	private UsuarioService usuariosService;
+	
+	@Autowired
+    private PasswordEncoder passwordEncoder;
 	
 	@ApiOperation(value = "LISTA TODOS LOS USUARIOS")
 	@GetMapping
@@ -70,6 +74,7 @@ public class UsuarioController {
 				  result.put("message", "Ya existe el id "+usuario.getIdUsuario()+" del usuario");
 				  return new ResponseEntity<>(result,HttpStatus.CONFLICT);
 				}
+				usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
 				usuario.setEstado(true);
 				usuariosService.insert(usuario);
 				result.put("success", true);

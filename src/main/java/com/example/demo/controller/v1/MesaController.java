@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.Authorization;
 
 import com.example.demo.service.MesaService;
 import com.example.demo.models.Mesa;
@@ -32,7 +33,7 @@ public class MesaController {
 	
 	
 	
-	@ApiOperation(value = "LISTA TODAS LAS MESAS")
+	@ApiOperation(value = "LISTA TODAS LAS MESAS" , authorizations = {@Authorization(value = "apiKey")})
 	@GetMapping
 	public ResponseEntity<?> findAllMesas() {
 		return new ResponseEntity<>(mesasService.findAll(),HttpStatus.OK);
@@ -56,7 +57,7 @@ public class MesaController {
 				return new ResponseEntity<>(result,HttpStatus.OK);
 			}
 	
-	@ApiOperation(value="CREAR Y GUARDAR UNA MESA")
+	@ApiOperation(value="CREAR Y GUARDAR UNA MESA" , authorizations = {@Authorization(value = "apiKey")})
 	@PostMapping
 	public ResponseEntity<?>insertMesa(
 			 @RequestBody Mesa mesa
@@ -81,7 +82,7 @@ public class MesaController {
 					
 			}
 	
-	@ApiOperation(value="ACTUALIZAR LOS DATOS DE UNA MESA")
+	@ApiOperation(value="ACTUALIZAR LOS DATOS DE UNA MESA" , authorizations = {@Authorization(value = "apiKey")})
 	@PutMapping
 	public ResponseEntity<?> updateTipoDocumento(
 			  @RequestBody Mesa mesa
@@ -103,7 +104,7 @@ public class MesaController {
 				
 				return new ResponseEntity<>(result, HttpStatus.OK);
 			}
-	@ApiOperation(value="ELIMINAR UN REGISTRO")
+	@ApiOperation(value="ELIMINAR UN REGISTRO" , authorizations = {@Authorization(value = "apiKey")})
 	@PutMapping("/delete")
 	public ResponseEntity<?> deleteTipoDocumento(
 	 @RequestBody Mesa mesa

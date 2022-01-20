@@ -22,7 +22,7 @@ import lombok.ToString;
 @ToString(of = { "idToken" })
 @Table(name="token", schema = "public")
 
-public class Token extends AuditModel {
+public class Token  {
 	
 	private static final long serialVersionUID = 1L;
 	@Id

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.Authorization;
 
 import com.example.demo.models.Clientes;
 import com.example.demo.models.Productos;
@@ -29,14 +30,14 @@ public class ProductosController {
 	@Autowired
 	private ProductoService productoService;
 	
-	@ApiOperation(value = "LISTA TODOS LOS PRODUCTOS")
+	@ApiOperation(value = "LISTA TODOS LOS PRODUCTOS" , authorizations = {@Authorization(value = "apiKey")})
 	@GetMapping
 	public ResponseEntity<?> findAll(){
 		return new ResponseEntity<>(productoService.findAll(),HttpStatus.OK);
 	}
 	
 	
-	@ApiOperation(value = "BUSCA UN PRODUCTO POR SU ID")
+	@ApiOperation(value = "BUSCA UN PRODUCTO POR SU ID" , authorizations = {@Authorization(value = "apiKey")})
 	@GetMapping("/{idProducto}")
 	public ResponseEntity<?>findById(
 		     @PathVariable(value = "idProducto") Integer idProducto
@@ -54,7 +55,7 @@ public class ProductosController {
 				return new ResponseEntity<>(result,HttpStatus.OK);
 			}
 	
-	@ApiOperation(value="CREAR Y GUARDAR UN PRODUCTO")
+	@ApiOperation(value="CREAR Y GUARDAR UN PRODUCTO" , authorizations = {@Authorization(value = "apiKey")})
 	@PostMapping
 	public ResponseEntity<?>insertProducto(
 			 @RequestBody Productos producto
@@ -78,7 +79,7 @@ public class ProductosController {
 			}
 	
 	
-	@ApiOperation(value="ACTUALIZAR LOS DATOS DE LOS PRODUCTOS")
+	@ApiOperation(value="ACTUALIZAR LOS DATOS DE LOS PRODUCTOS" , authorizations = {@Authorization(value = "apiKey")})
 	@PutMapping
 	public ResponseEntity<?> updateProductos(
 			  @RequestBody Productos producto
@@ -101,7 +102,7 @@ public class ProductosController {
 				return new ResponseEntity<>(result, HttpStatus.OK);
 			}
 	
-	@ApiOperation(value="ELIMINAR UN REGISTRO")
+	@ApiOperation(value="ELIMINAR UN REGISTRO" , authorizations = {@Authorization(value = "apiKey")})
 	@PutMapping("/delete")
 	public ResponseEntity<?> deleteCategoria(
 	 @RequestBody Productos producto

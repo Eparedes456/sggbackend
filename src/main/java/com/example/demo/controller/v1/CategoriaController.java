@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.Authorization;
 
 import com.example.demo.models.Categoria;
 import com.example.demo.models.Empresa;
@@ -29,7 +30,7 @@ public class CategoriaController {
 	@Autowired
 	private CategoriaService categoriaService;
 	
-	@ApiOperation(value = "LISTA TODAS LAS CATEGORIAS")
+	@ApiOperation(value = "LISTA TODAS LAS CATEGORIAS" , authorizations = {@Authorization(value = "apiKey")} )
 	@GetMapping
 	public ResponseEntity<?> findAll(){
 		return new ResponseEntity<>(categoriaService.findAll(),HttpStatus.OK);
@@ -54,7 +55,7 @@ public class CategoriaController {
 				return new ResponseEntity<>(result,HttpStatus.OK);
 			}
 	
-	@ApiOperation(value="CREAR Y GUARDAR UNA CATEGORIA")
+	@ApiOperation(value="CREAR Y GUARDAR UNA CATEGORIA"  , authorizations = {@Authorization(value = "apiKey")} )
 	@PostMapping
 	public ResponseEntity<?>insertCategoria(
 			 @RequestBody Categoria categoria
@@ -77,7 +78,7 @@ public class CategoriaController {
 					
 			}
 	
-	@ApiOperation(value="ACTUALIZAR LOS DATOS DE LA CATEGORIA")
+	@ApiOperation(value="ACTUALIZAR LOS DATOS DE LA CATEGORIA" , authorizations = {@Authorization(value = "apiKey")} )
 	@PutMapping
 	public ResponseEntity<?> updateCategoria(
 			  @RequestBody Categoria categoria
@@ -101,7 +102,7 @@ public class CategoriaController {
 			}
 	
 	
-	@ApiOperation(value="ELIMINAR UN REGISTRO")
+	@ApiOperation(value="ELIMINAR UN REGISTRO" , authorizations = {@Authorization(value = "apiKey")})
 	@PutMapping("/delete")
 	public ResponseEntity<?> deleteCategoria(
 	 @RequestBody Categoria categoria

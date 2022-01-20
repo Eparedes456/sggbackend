@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.Authorization;
 
 import com.example.demo.models.Clientes;
 import com.example.demo.models.Reserva;
@@ -29,7 +30,7 @@ public class ReservaController {
 	@Autowired
 	private ReservaService reservaService;
 	
-	@ApiOperation(value = "LISTA TODAS LAS RESERVAS")
+	@ApiOperation(value = "LISTA TODAS LAS RESERVAS" , authorizations = {@Authorization(value = "apiKey")})
 	@GetMapping
 	public ResponseEntity<?> findAll(){
 		return new ResponseEntity<>(reservaService.findAll(),HttpStatus.OK);

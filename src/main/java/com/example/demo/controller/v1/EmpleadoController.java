@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.Authorization;
 
 import com.example.demo.models.Empleado;
 import com.example.demo.models.Productos;
@@ -30,7 +31,7 @@ public class EmpleadoController {
 	@Autowired
 	private EmpleadoService empleadoService;
 	
-	@ApiOperation(value = "LISTA TODOS LOS PRODUCTOS")
+	@ApiOperation(value = "LISTA TODOS LOS PRODUCTOS" , authorizations = {@Authorization(value = "apiKey")})
 	@GetMapping
 	public ResponseEntity<?> findAll(){
 		return new ResponseEntity<>(empleadoService.findAll(),HttpStatus.OK);
@@ -38,7 +39,7 @@ public class EmpleadoController {
 	
 	
 	
-	@ApiOperation(value = "BUSCA UN EMPLEADO POR SU ID")
+	@ApiOperation(value = "BUSCA UN EMPLEADO POR SU ID" , authorizations = {@Authorization(value = "apiKey")})
 	@GetMapping("/{idEmpleado}")
 	public ResponseEntity<?>findById(
 		     @PathVariable(value = "idEmpleado") Integer idEmpleado
@@ -58,7 +59,7 @@ public class EmpleadoController {
 	
 	
 	
-	@ApiOperation(value="CREAR Y GUARDAR UN EMPLEADO")
+	@ApiOperation(value="CREAR Y GUARDAR UN EMPLEADO" , authorizations = {@Authorization(value = "apiKey")})
 	@PostMapping
 	public ResponseEntity<?>insertEmpleado(
 			 @RequestBody Empleado empleado
@@ -83,7 +84,7 @@ public class EmpleadoController {
 	
 	
 	
-	@ApiOperation(value="ACTUALIZAR LOS DATOS DE LOS EMPLEADOS")
+	@ApiOperation(value="ACTUALIZAR LOS DATOS DE LOS EMPLEADOS" , authorizations = {@Authorization(value = "apiKey")})
 	@PutMapping
 	public ResponseEntity<?> updateProductos(
 			  @RequestBody Empleado empleado
@@ -107,7 +108,7 @@ public class EmpleadoController {
 			}
 	
 	
-	@ApiOperation(value="ELIMINAR UN REGISTRO")
+	@ApiOperation(value="ELIMINAR UN REGISTRO" , authorizations = {@Authorization(value = "apiKey")})
 	@PutMapping("/delete")
 	public ResponseEntity<?> deleteEmpleado(
 	 @RequestBody Empleado empleado
