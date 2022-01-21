@@ -29,6 +29,7 @@ public class Usuarios {
 	@Column(name = "id_usuario")
 	private Integer idUsuario;
 	
+	
 	private Integer id_empleado;
 	
 	

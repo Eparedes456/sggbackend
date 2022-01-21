@@ -42,6 +42,7 @@ import com.example.demo.config.security.model.JwtUser;
 import com.example.demo.config.security.token.JwtTokenUtil;
 import com.example.demo.models.Token;
 import com.example.demo.models.Usuarios;
+import com.example.demo.service.EmpleadoService;
 import com.example.demo.service.TokenService;
 import com.example.demo.service.UsuarioService;
 
@@ -71,6 +72,9 @@ public class AuthController {
 
     @Autowired
     private UsuarioService usuarioService;
+    
+    @Autowired
+    private EmpleadoService empleadoService;
 
     @Autowired
     private UserDetailsService jwtUserDetailService;
@@ -114,9 +118,9 @@ public class AuthController {
                 }
                 HashMap<String, Object> result = new HashMap<String, Object>();
                 result.put("tokenType", "Bearer");
-                // result.put("user", jwtUser);
+                result.put("user", jwtUser);
                 result.put("token", token);
-                // result.put("sistemas", usuarioSistemaService.findByUsuario(usuarioBean.getIdUsuario()));
+                result.put("empleado", empleadoService.findById(usuarioBean.getId_empleado()));
                 return new ResponseEntity<>(result, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(new RestException("El usuario no tiene acceso"), HttpStatus.NOT_FOUND);
