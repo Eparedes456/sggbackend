@@ -19,8 +19,8 @@ import lombok.Data;
 public class Categoria {
 	
 	@Id
-	@SequenceGenerator(name = "CATEGORIA_ID_GENERATOR", sequenceName = "categoria_id_empresa_seq", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CATEGORIA_ID_GENERATOR")
+	@SequenceGenerator(name = "categoria_id_categoria_seq", sequenceName = "categoria_id_categoria_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "categoria_id_categoria_seq")
 	@ApiModelProperty(value = "id principal de la categoria", required = false)
 	
 	
