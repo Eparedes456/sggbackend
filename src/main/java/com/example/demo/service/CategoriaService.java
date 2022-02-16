@@ -14,7 +14,7 @@ public class CategoriaService {
 	private CategoriaRepository categoriarepository;
 	
 	public List<Categoria> findAll() {
-		   return (List<Categoria>)categoriarepository.findAll();
+		   return (List<Categoria>)categoriarepository.finAllCategoria();
 		}
 	
 	public Categoria findById(Integer idCategoria) {
