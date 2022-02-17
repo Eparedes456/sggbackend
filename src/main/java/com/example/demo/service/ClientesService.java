@@ -14,7 +14,7 @@ public class ClientesService {
 	private ClientesRepository clienteRepository;
 	
 	public List<Clientes> findAll() {
-		   return (List<Clientes>)clienteRepository.findAll();
+		   return (List<Clientes>)clienteRepository.finAllCliente();
 		}
 	
 	public Clientes findById(Integer idCliente) {
