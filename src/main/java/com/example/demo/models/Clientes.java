@@ -28,7 +28,7 @@ public class Clientes {
 	private Integer idCliente;
 	private String	nombre_cliente;
 	private String	apellidos_cliente;
-	private Integer num_dni;
+	private String num_dni;
 	private String	telefono;
 	private String	direccion;
 	private boolean	estado;
